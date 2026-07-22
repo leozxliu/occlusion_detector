@@ -10,6 +10,8 @@ sample. The curve is the per-frame occlusion probability; the orange line is the
 detected onset; the filmstrip shows the channel flipping from translucent flow
 (green) to packed thrombus (red) exactly at that instant.
 
+<img src="docs/demo_prp_ch0.png" alt="Occlusion-onset detection demo" width="900">
+
 ## Data
 
 Data comes from our in-house brightfield microscopy videos of blood flowing through
@@ -45,18 +47,18 @@ pip install -e .            # or: pip install -r requirements from pyproject
 
 ## Run
 
-> ```bash
-> export PYTHONPATH=src
-> # 1) extract per-channel frames + labels
-> python -m clotting.io.extract --config configs/data.yaml
-> # 2) train + evaluate the classifier (leave-one-channel-out)
-> python -m clotting.train.classify --data-config configs/data.yaml --config configs/baseline.yaml
-> # 3) visualize results
-> python -m clotting.eval.plot_signal
-> python -m clotting.eval.demo
-> # 4) run the trained model on a new video (auto-detects channels + orientation)
-> python -m clotting.infer.predict --video "data/raw/example_video.avi" --out runs/prp
-> ```
+```bash
+export PYTHONPATH=src
+# 1) extract per-channel frames + labels
+python -m clotting.io.extract --config configs/data.yaml
+# 2) train + evaluate the classifier (leave-one-channel-out)
+python -m clotting.train.classify --data-config configs/data.yaml --config configs/baseline.yaml
+# 3) visualize results
+python -m clotting.eval.plot_signal
+python -m clotting.eval.demo
+# 4) run the trained model on a new video (auto-detects channels + orientation)
+python -m clotting.infer.predict --video "data/raw/example_video.avi" --out runs/prp
+```
 
 Outputs land in `runs/stage1/`:
 
