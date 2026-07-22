@@ -1,0 +1,33 @@
+# Data + labeling configuration for the occlusion detector.
+video: data/raw/example_control.avi
+fps: 30.0
+
+# Acquisition speedup: videos are played back 10x faster than real time.
+# real_time_s = video_time_s * speedup. All plots/report units use real time.
+speedup: 10.0
+
+# Two vertical microfluidic channels, treated as independent datasets.
+# ROI in pixel coords: [x0, y0, x1, y1] (y spans full frame height).
+channels:
+  ch0:
+    roi: [89, 0, 230, 510]
+  ch1:
+    roi: [519, 0, 660, 510]
+
+# Temporal labeling. Both channels occlude ~15s.
+# Frames strictly before flow_before_s -> flowing (0)
+# Frames strictly after occ_after_s   -> occluded (1)
+# Frames in [flow_before_s, occ_after_s] -> transition, EXCLUDED from training.
+# NOTE: these thresholds are in VIDEO-time seconds (= real seconds / speedup).
+# Real-time labeling: flowing < 90s real, occluded > 200s real.
+# With speedup=10 that is 9s and 20s in video-time.
+# These define the training classes only. There is deliberately NO onset
+# "ground truth": the true stop instant is not known (human calls are unreliable),
+# so we report the DETECTED onset, not an error against a guessed onset.
+labels:
+  flow_before_s: 9.0    # 90s real
+  occ_after_s: 20.0     # 200s real
+
+paths:
+  frames_dir: data/frames   # cropped per-channel frames
+  labels_dir: data/labels   # per-channel csv: frame_idx,time_s,label,split_role

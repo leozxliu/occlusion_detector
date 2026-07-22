@@ -1,0 +1,24 @@
+# Stage 1: per-frame CNN classifier (flowing vs occluded).
+model:
+  backbone: resnet18      # timm name; small backbone for a tiny dataset
+  pretrained: true
+  img_size: 224
+  dropout: 0.2
+
+train:
+  epochs: 12
+  batch_size: 32
+  lr: 0.0003
+  weight_decay: 0.0001
+  freeze_backbone: false  # full fine-tune (backbone is small)
+  num_workers: 4
+  seed: 0
+
+# Leave-one-channel-out: train on one channel, test on the other.
+# With only 2 channels this is our honest generalization test.
+eval:
+  # onset trigger: fire when occlusion prob > threshold for >= sustain frames
+  onset_threshold: 0.5
+  onset_sustain_frames: 5
+
+output_dir: runs/stage1
