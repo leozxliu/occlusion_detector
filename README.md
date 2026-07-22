@@ -15,11 +15,10 @@ detected onset; the filmstrip shows the channel flipping from translucent flow
 
 ## Data
 
-Raw videos live in `data/raw/` (30 fps, 694x510, playback is **10x sped up**, so
-`real_time_s = video_time_s * 10`):
-- `example_control.avi` — training video, **two vertical channels** (`ch0` left, `ch1` right).
-- `Example RBC.avi` — inference; **horizontal channels** (flow right->left; rotated for display).
-- `Example Dilution.avi`, `Example PRP.avi` — inference; vertical channels.
+Data comes from our in-house brightfield microscopy videos of blood flowing through
+microfluidic channels until a thrombus occludes the vessel. Raw videos live in
+`data/raw/` (30 fps, 694x510, playback is **10x sped up**, so
+`real_time_s = video_time_s * 10`).
 
 Each video's two channels are treated as **independent datasets**.
 
