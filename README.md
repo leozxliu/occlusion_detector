@@ -45,6 +45,10 @@ pip install -e .            # or: pip install -r requirements from pyproject
 
 ## Run
 
+> The raw videos, extracted frames, trained models, and `runs/` outputs are **not
+> tracked in git** (see `.gitignore`). Put your own `.avi` files in `data/raw/` and
+> point `configs/data.yaml` (`video:`) at your training video before running.
+
 ```bash
 export PYTHONPATH=src
 # 1) extract per-channel frames + labels
@@ -62,3 +66,7 @@ Outputs land in `runs/stage1/`:
 - `model_test_<ch>.pt` — model for each fold
 - `signal_test_<ch>.csv` — per-frame occlusion probability over the whole video
 - `summary.json` — frame F1 and detected onset per fold
+
+## License
+
+Released under the [MIT License](LICENSE).

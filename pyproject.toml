@@ -3,6 +3,7 @@ name = "clotting"
 version = "0.1.0"
 description = "Occlusion-onset detector for microfluidic thrombosis video"
 requires-python = ">=3.9"
+license = { text = "MIT" }
 dependencies = [
     "opencv-python-headless",
     "numpy",
