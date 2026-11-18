@@ -1,0 +1,132 @@
+{
+  "speedup": 10,
+  "clock": "video_zero",
+  "target_flow_direction": "top_to_bottom",
+  "videos": [
+    {
+      "case": "041026",
+      "filename": "041026 Control.avi",
+      "fps": 30,
+      "frame_count": 953,
+      "flow_direction": "top_to_bottom",
+      "channel_assignments": [
+        {
+          "roi_id": "right",
+          "workbook_channel": 2,
+          "ot_seconds": 299.203874,
+          "roi_xyxy": [
+            480,
+            0,
+            670,
+            510
+          ],
+          "entry_frame": 150
+        }
+      ]
+    },
+    {
+      "case": "041426",
+      "filename": "041426 Control.avi",
+      "fps": 30,
+      "frame_count": 905,
+      "flow_direction": "top_to_bottom",
+      "channel_assignments": [
+        {
+          "roi_id": "left",
+          "workbook_channel": 2,
+          "ot_seconds": 174.658505,
+          "roi_xyxy": [
+            70,
+            0,
+            240,
+            510
+          ],
+          "entry_frame": 160
+        }
+      ]
+    },
+    {
+      "case": "041626",
+      "filename": "041626 Control.avi",
+      "fps": 30,
+      "frame_count": 1115,
+      "flow_direction": "top_to_bottom",
+      "channel_assignments": [
+        {
+          "roi_id": "left",
+          "workbook_channel": 2,
+          "ot_seconds": 118.475791,
+          "roi_xyxy": [
+            70,
+            0,
+            240,
+            510
+          ],
+          "entry_frame": 85
+        },
+        {
+          "roi_id": "right",
+          "workbook_channel": 1,
+          "ot_seconds": 158.642935,
+          "roi_xyxy": [
+            480,
+            0,
+            670,
+            510
+          ],
+          "entry_frame": 85
+        }
+      ]
+    },
+    {
+      "case": "042226",
+      "filename": "042226 Control.avi",
+      "fps": 30,
+      "frame_count": 847,
+      "flow_direction": "top_to_bottom",
+      "channel_assignments": [
+        {
+          "roi_id": "left",
+          "workbook_channel": 2,
+          "ot_seconds": 153.567356,
+          "roi_xyxy": [
+            70,
+            0,
+            240,
+            510
+          ],
+          "entry_frame": 80
+        },
+        {
+          "roi_id": "right",
+          "workbook_channel": 1,
+          "ot_seconds": 163.598068,
+          "roi_xyxy": [
+            480,
+            0,
+            670,
+            510
+          ],
+          "entry_frame": 80
+        }
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "case": "041026",
+      "side": "left",
+      "reason": "Excluded by owner during anomaly review; exact anomaly not documented"
+    },
+    {
+      "case": "041426",
+      "side": "right",
+      "reason": "Excluded by owner during anomaly review; OT also exceeds recording"
+    }
+  ],
+  "notes": [
+    "041026 filename/case ID differs from workbook date; unresolved.",
+    "Entry frames gate eligibility only; they do not shift the OT clock.",
+    "All four originals are top-to-bottom; prior April 10 flip was corrected."
+  ]
+}

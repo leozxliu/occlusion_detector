@@ -1,0 +1,367 @@
+{
+  "protocol": {
+    "split": "leave-one-video-out, both channels together; four folds",
+    "clock": "video zero; experiment_s=10*video_s",
+    "initialization": "fresh ImageNet ResNet18 each fold, no prior occlusion weights",
+    "epochs": 12,
+    "seed": 0,
+    "training_sampling_fps": 3,
+    "test_sampling": "all frames at 30 fps after visible blood entry",
+    "train_transition_exclusion_experiment_s": 5,
+    "test_transition_exclusion": false,
+    "optimizer": "AdamW lr=0.0003 weight_decay=0.0001",
+    "batch_size": 32,
+    "threshold": 0.5,
+    "sustain_frames": 5,
+    "model_selection": "fixed final epoch; no test-driven tuning",
+    "labels": "0 before workbook OT, 1 at/after OT; assumes persistent occlusion after OT",
+    "roi": "fixed x=[70,240] left and [480,670] right; full height; no label-based ROI fitting",
+    "onset_definition": "start of first run of 5 positive frames; confirmation arrives 4 frames later",
+    "orientation": "top_to_bottom; source orientation from manifest; no vertical augmentation",
+    "scope": "OT-based experimental labels, not independent frame-by-frame annotations"
+  },
+  "device": "mps",
+  "folds": [
+    {
+      "test_case": "041026",
+      "training_cases": [
+        "041426",
+        "041626",
+        "042226"
+      ],
+      "training_frames": 420,
+      "loss": [
+        0.5507291362399147,
+        0.28212443646930513,
+        0.1546935960650444,
+        0.09766438688550677,
+        0.06607798792067028,
+        0.053479343226977755,
+        0.05285058802082425,
+        0.05727863049223309,
+        0.04223308996075675,
+        0.05335281427417483,
+        0.03894471142973219,
+        0.035110245928877876
+      ],
+      "channels": [
+        {
+          "case": "041026",
+          "side": "right",
+          "channel": 2,
+          "ot_s": 299.203874,
+          "entry_frame": 150,
+          "last_video_s": 31.733333333333334,
+          "observable": true,
+          "fps": 30.0,
+          "metrics": {
+            "n_frames": 803,
+            "tn": 746,
+            "fp": 2,
+            "fn": 53,
+            "tp": 2,
+            "accuracy": 0.9315068493150684,
+            "precision": 0.5,
+            "recall_sensitivity": 0.03636363636363636,
+            "specificity": 0.9973262032085561,
+            "f1": 0.06779661016949153,
+            "auroc": 0.9587992221682062
+          },
+          "predicted_onset_video_s": null,
+          "predicted_onset_experiment_s": null,
+          "error_experiment_s": null,
+          "false_alarm_on_censored_channel": false
+        }
+      ],
+      "metrics": {
+        "n_frames": 803,
+        "tn": 746,
+        "fp": 2,
+        "fn": 53,
+        "tp": 2,
+        "accuracy": 0.9315068493150684,
+        "precision": 0.5,
+        "recall_sensitivity": 0.03636363636363636,
+        "specificity": 0.9973262032085561,
+        "f1": 0.06779661016949153,
+        "auroc": 0.9587992221682062
+      }
+    },
+    {
+      "test_case": "041426",
+      "training_cases": [
+        "041026",
+        "041626",
+        "042226"
+      ],
+      "training_frames": 426,
+      "loss": [
+        0.543381025813555,
+        0.26473978924359515,
+        0.15296826445160897,
+        0.0928590282308104,
+        0.0743623791795941,
+        0.06987174498922948,
+        0.0522451680590849,
+        0.04368681289985811,
+        0.0262377685889112,
+        0.03532047303034946,
+        0.013535151975185658,
+        0.012467197863988474
+      ],
+      "channels": [
+        {
+          "case": "041426",
+          "side": "left",
+          "channel": 2,
+          "ot_s": 174.658505,
+          "entry_frame": 160,
+          "last_video_s": 30.133333333333333,
+          "observable": true,
+          "fps": 30.0,
+          "metrics": {
+            "n_frames": 745,
+            "tn": 332,
+            "fp": 32,
+            "fn": 0,
+            "tp": 381,
+            "accuracy": 0.9570469798657718,
+            "precision": 0.9225181598062954,
+            "recall_sensitivity": 1.0,
+            "specificity": 0.9120879120879121,
+            "f1": 0.9596977329974811,
+            "auroc": 0.9758732081566728
+          },
+          "predicted_onset_video_s": 16.566666666666666,
+          "predicted_onset_experiment_s": 165.66666666666666,
+          "error_experiment_s": -8.991838333333334,
+          "false_alarm_on_censored_channel": false
+        }
+      ],
+      "metrics": {
+        "n_frames": 745,
+        "tn": 332,
+        "fp": 32,
+        "fn": 0,
+        "tp": 381,
+        "accuracy": 0.9570469798657718,
+        "precision": 0.9225181598062954,
+        "recall_sensitivity": 1.0,
+        "specificity": 0.9120879120879121,
+        "f1": 0.9596977329974811,
+        "auroc": 0.9758732081566728
+      }
+    },
+    {
+      "test_case": "041626",
+      "training_cases": [
+        "041026",
+        "041426",
+        "042226"
+      ],
+      "training_frames": 298,
+      "loss": [
+        0.5581793253053755,
+        0.3205107898520143,
+        0.1868848807659725,
+        0.1378756039494636,
+        0.08276444918557302,
+        0.06381222168171166,
+        0.07720088803728155,
+        0.061441259496164004,
+        0.0394975672032209,
+        0.03409018270021317,
+        0.039431896335726614,
+        0.03874436127109416
+      ],
+      "channels": [
+        {
+          "case": "041626",
+          "side": "left",
+          "channel": 2,
+          "ot_s": 118.475791,
+          "entry_frame": 85,
+          "last_video_s": 37.13333333333333,
+          "observable": true,
+          "fps": 30.0,
+          "metrics": {
+            "n_frames": 1030,
+            "tn": 271,
+            "fp": 0,
+            "fn": 55,
+            "tp": 704,
+            "accuracy": 0.9466019417475728,
+            "precision": 1.0,
+            "recall_sensitivity": 0.927536231884058,
+            "specificity": 1.0,
+            "f1": 0.9624060150375939,
+            "auroc": 0.9986484449824735
+          },
+          "predicted_onset_video_s": 13.333333333333334,
+          "predicted_onset_experiment_s": 133.33333333333334,
+          "error_experiment_s": 14.857542333333342,
+          "false_alarm_on_censored_channel": false
+        },
+        {
+          "case": "041626",
+          "side": "right",
+          "channel": 1,
+          "ot_s": 158.642935,
+          "entry_frame": 85,
+          "last_video_s": 37.13333333333333,
+          "observable": true,
+          "fps": 30.0,
+          "metrics": {
+            "n_frames": 1030,
+            "tn": 378,
+            "fp": 13,
+            "fn": 23,
+            "tp": 616,
+            "accuracy": 0.9650485436893204,
+            "precision": 0.9793322734499205,
+            "recall_sensitivity": 0.9640062597809077,
+            "specificity": 0.9667519181585678,
+            "f1": 0.9716088328075709,
+            "auroc": 0.9971762944818671
+          },
+          "predicted_onset_video_s": 16.866666666666667,
+          "predicted_onset_experiment_s": 168.66666666666669,
+          "error_experiment_s": 10.023731666666691,
+          "false_alarm_on_censored_channel": false
+        }
+      ],
+      "metrics": {
+        "n_frames": 2060,
+        "tn": 649,
+        "fp": 13,
+        "fn": 78,
+        "tp": 1320,
+        "accuracy": 0.9558252427184466,
+        "precision": 0.9902475618904726,
+        "recall_sensitivity": 0.944206008583691,
+        "specificity": 0.9803625377643505,
+        "f1": 0.9666788722079824,
+        "auroc": 0.996671442587382
+      }
+    },
+    {
+      "test_case": "042226",
+      "training_cases": [
+        "041026",
+        "041426",
+        "041626"
+      ],
+      "training_frames": 350,
+      "loss": [
+        0.5605151254790169,
+        0.3180800921576364,
+        0.172867633998394,
+        0.10175836452416011,
+        0.06335285374096462,
+        0.07538742916924612,
+        0.03305820333106177,
+        0.033669490697128435,
+        0.021488335579633713,
+        0.021554809414914677,
+        0.015009707877678531,
+        0.011304283565176385
+      ],
+      "channels": [
+        {
+          "case": "042226",
+          "side": "left",
+          "channel": 2,
+          "ot_s": 153.567356,
+          "entry_frame": 80,
+          "last_video_s": 28.2,
+          "observable": true,
+          "fps": 30.0,
+          "metrics": {
+            "n_frames": 767,
+            "tn": 342,
+            "fp": 39,
+            "fn": 9,
+            "tp": 377,
+            "accuracy": 0.9374185136897001,
+            "precision": 0.90625,
+            "recall_sensitivity": 0.9766839378238342,
+            "specificity": 0.8976377952755905,
+            "f1": 0.940149625935162,
+            "auroc": 0.9881617777052479
+          },
+          "predicted_onset_video_s": 13.833333333333334,
+          "predicted_onset_experiment_s": 138.33333333333334,
+          "error_experiment_s": -15.234022666666647,
+          "false_alarm_on_censored_channel": false
+        },
+        {
+          "case": "042226",
+          "side": "right",
+          "channel": 1,
+          "ot_s": 163.598068,
+          "entry_frame": 80,
+          "last_video_s": 28.2,
+          "observable": true,
+          "fps": 30.0,
+          "metrics": {
+            "n_frames": 767,
+            "tn": 411,
+            "fp": 0,
+            "fn": 114,
+            "tp": 242,
+            "accuracy": 0.8513689700130378,
+            "precision": 1.0,
+            "recall_sensitivity": 0.6797752808988764,
+            "specificity": 1.0,
+            "f1": 0.8093645484949833,
+            "auroc": 0.9979018015801416
+          },
+          "predicted_onset_video_s": 20.533333333333335,
+          "predicted_onset_experiment_s": 205.33333333333334,
+          "error_experiment_s": 41.73526533333333,
+          "false_alarm_on_censored_channel": false
+        }
+      ],
+      "metrics": {
+        "n_frames": 1534,
+        "tn": 753,
+        "fp": 39,
+        "fn": 123,
+        "tp": 619,
+        "accuracy": 0.894393741851369,
+        "precision": 0.9407294832826748,
+        "recall_sensitivity": 0.8342318059299192,
+        "specificity": 0.9507575757575758,
+        "f1": 0.8842857142857142,
+        "auroc": 0.9811320754716981
+      }
+    }
+  ],
+  "pooled_frame_metrics": {
+    "n_frames": 5142,
+    "tn": 2480,
+    "fp": 86,
+    "fn": 254,
+    "tp": 2322,
+    "accuracy": 0.9338778685336445,
+    "precision": 0.9642857142857143,
+    "recall_sensitivity": 0.9013975155279503,
+    "specificity": 0.9664848012470771,
+    "f1": 0.9317817014446228,
+    "auroc": 0.9878415574183179
+  },
+  "macro_video_f1": 0.7196147324151673,
+  "observable_events": 6,
+  "observable_events_with_trigger": 5,
+  "missed_observable_events": 1,
+  "censored_channels": 0,
+  "false_alarms_on_censored_channels": 0,
+  "onset_mae_experimental_s_detected_only": 18.168480066666667,
+  "onset_median_abs_error_experimental_s_detected_only": 14.857542333333342,
+  "notes": [
+    "Video-held-out cross-validation, not an untouched external test cohort.",
+    "Frames within a video are correlated; n=4 independent recordings.",
+    "OT clock alignment supplied by user; labels assume occlusion persists after OT.",
+    "No hyperparameters selected using test predictions."
+  ]
+}

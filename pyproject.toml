@@ -13,6 +13,8 @@ dependencies = [
     "torch",
     "torchvision",
     "timm",
+    "matplotlib",
+    "joblib",
 ]
 
 [build-system]

@@ -1,0 +1,9 @@
+{
+  "eligible_frames": 5142,
+  "ordered_frame_content_sha256": "994a24009d97714d3a2b2ba2e5af4a624bd93aae07168e605d68397be770644e",
+  "input": "Previously verified normalized frame cache; source AVI streams unavailable during this run",
+  "excluded": [
+    "041026 left",
+    "041426 right"
+  ]
+}

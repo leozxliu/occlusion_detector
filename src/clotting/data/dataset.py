@@ -61,8 +61,7 @@ class FrameDataset(Dataset):
         # Light augmentation; flow/occlusion is texture+brightness, so keep it gentle.
         if np.random.rand() < 0.5:
             img = img[:, ::-1]  # horizontal flip
-        if np.random.rand() < 0.5:
-            img = img[::-1, :]  # vertical flip (channel is roughly symmetric)
+        # Preserve normalized top-to-bottom flow: no vertical flips.
         if np.random.rand() < 0.5:
             factor = 0.85 + 0.3 * np.random.rand()
             img = np.clip(img.astype(np.float32) * factor, 0, 255).astype(np.uint8)

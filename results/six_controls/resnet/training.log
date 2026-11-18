@@ -1,0 +1,59 @@
+Loaded 5142 verified normalized frames for six approved channels
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+FOLD 041026 train cases ['041426', '041626', '042226'] frames 420
+041026 epoch 1 loss 0.55073
+041026 epoch 2 loss 0.28212
+041026 epoch 3 loss 0.15469
+041026 epoch 4 loss 0.09766
+041026 epoch 5 loss 0.06608
+041026 epoch 6 loss 0.05348
+041026 epoch 7 loss 0.05285
+041026 epoch 8 loss 0.05728
+041026 epoch 9 loss 0.04223
+041026 epoch 10 loss 0.05335
+041026 epoch 11 loss 0.03894
+041026 epoch 12 loss 0.03511
+RESULT 041026 {'n_frames': 803, 'tn': 746, 'fp': 2, 'fn': 53, 'tp': 2, 'accuracy': 0.9315068493150684, 'precision': 0.5, 'recall_sensitivity': 0.03636363636363636, 'specificity': 0.9973262032085561, 'f1': 0.06779661016949153, 'auroc': 0.9587992221682062}
+FOLD 041426 train cases ['041026', '041626', '042226'] frames 426
+041426 epoch 1 loss 0.54338
+041426 epoch 2 loss 0.26474
+041426 epoch 3 loss 0.15297
+041426 epoch 4 loss 0.09286
+041426 epoch 5 loss 0.07436
+041426 epoch 6 loss 0.06987
+041426 epoch 7 loss 0.05225
+041426 epoch 8 loss 0.04369
+041426 epoch 9 loss 0.02624
+041426 epoch 10 loss 0.03532
+041426 epoch 11 loss 0.01354
+041426 epoch 12 loss 0.01247
+RESULT 041426 {'n_frames': 745, 'tn': 332, 'fp': 32, 'fn': 0, 'tp': 381, 'accuracy': 0.9570469798657718, 'precision': 0.9225181598062954, 'recall_sensitivity': 1.0, 'specificity': 0.9120879120879121, 'f1': 0.9596977329974811, 'auroc': 0.9758732081566728}
+FOLD 041626 train cases ['041026', '041426', '042226'] frames 298
+041626 epoch 1 loss 0.55818
+041626 epoch 2 loss 0.32051
+041626 epoch 3 loss 0.18688
+041626 epoch 4 loss 0.13788
+041626 epoch 5 loss 0.08276
+041626 epoch 6 loss 0.06381
+041626 epoch 7 loss 0.0772
+041626 epoch 8 loss 0.06144
+041626 epoch 9 loss 0.0395
+041626 epoch 10 loss 0.03409
+041626 epoch 11 loss 0.03943
+041626 epoch 12 loss 0.03874
+RESULT 041626 {'n_frames': 2060, 'tn': 649, 'fp': 13, 'fn': 78, 'tp': 1320, 'accuracy': 0.9558252427184466, 'precision': 0.9902475618904726, 'recall_sensitivity': 0.944206008583691, 'specificity': 0.9803625377643505, 'f1': 0.9666788722079824, 'auroc': 0.996671442587382}
+FOLD 042226 train cases ['041026', '041426', '041626'] frames 350
+042226 epoch 1 loss 0.56052
+042226 epoch 2 loss 0.31808
+042226 epoch 3 loss 0.17287
+042226 epoch 4 loss 0.10176
+042226 epoch 5 loss 0.06335
+042226 epoch 6 loss 0.07539
+042226 epoch 7 loss 0.03306
+042226 epoch 8 loss 0.03367
+042226 epoch 9 loss 0.02149
+042226 epoch 10 loss 0.02155
+042226 epoch 11 loss 0.01501
+042226 epoch 12 loss 0.0113
+RESULT 042226 {'n_frames': 1534, 'tn': 753, 'fp': 39, 'fn': 123, 'tp': 619, 'accuracy': 0.894393741851369, 'precision': 0.9407294832826748, 'recall_sensitivity': 0.8342318059299192, 'specificity': 0.9507575757575758, 'f1': 0.8842857142857142, 'auroc': 0.9811320754716981}
+DONE {"device": "mps", "pooled_frame_metrics": {"n_frames": 5142, "tn": 2480, "fp": 86, "fn": 254, "tp": 2322, "accuracy": 0.9338778685336445, "precision": 0.9642857142857143, "recall_sensitivity": 0.9013975155279503, "specificity": 0.9664848012470771, "f1": 0.9317817014446228, "auroc": 0.9878415574183179}, "macro_video_f1": 0.7196147324151673, "observable_events": 6, "observable_events_with_trigger": 5, "missed_observable_events": 1, "censored_channels": 0, "false_alarms_on_censored_channels": 0, "onset_mae_experimental_s_detected_only": 18.168480066666667, "onset_median_abs_error_experimental_s_detected_only": 14.857542333333342, "notes": ["Video-held-out cross-validation, not an untouched external test cohort.", "Frames within a video are correlated; n=4 independent recordings.", "OT clock alignment supplied by user; labels assume occlusion persists after OT.", "No hyperparameters selected using test predictions."]}

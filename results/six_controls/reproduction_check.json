@@ -1,0 +1,9 @@
+{
+  "validation_date": "2026-11-18",
+  "tests_passed": 5,
+  "resnet_full_four_fold_reproduction": "Exact match to archived summary and signals on same machine/frame cache",
+  "motion_full_four_fold_reproduction": "Exact match to archived summary and signals",
+  "comparison_regeneration": "Exact match",
+  "preparation_test": "Synthetic AVI end-to-end extraction, orientation, labels, exclusions, no vertical augmentation",
+  "limitation": "Original AVI re-extraction not rerun because source AVI streams were unavailable; previously verified normalized cache used. Cross-platform bitwise agreement is not guaranteed."
+}

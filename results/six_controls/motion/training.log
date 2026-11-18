@@ -1,0 +1,11 @@
+features 041026 right 803
+features 041426 left 745
+features 041626 left 1030
+features 041626 right 1030
+features 042226 left 767
+features 042226 right 767
+RESULT 041026 {'n_frames': 803, 'tn': 651, 'fp': 97, 'fn': 0, 'tp': 55, 'precision': 0.3618421052631579, 'recall_sensitivity': 1.0, 'specificity': 0.8703208556149733, 'f1': 0.5314009661835749, 'accuracy': 0.8792029887920298, 'auroc': 0.9482498784637822}
+RESULT 041426 {'n_frames': 745, 'tn': 304, 'fp': 60, 'fn': 0, 'tp': 381, 'precision': 0.8639455782312925, 'recall_sensitivity': 1.0, 'specificity': 0.8351648351648352, 'f1': 0.927007299270073, 'accuracy': 0.9194630872483222, 'auroc': 0.9996394681434052}
+RESULT 041626 {'n_frames': 2060, 'tn': 647, 'fp': 15, 'fn': 377, 'tp': 1021, 'precision': 0.9855212355212355, 'recall_sensitivity': 0.7303290414878397, 'specificity': 0.9773413897280967, 'f1': 0.8389482333607231, 'accuracy': 0.8097087378640777, 'auroc': 0.9767092825745888}
+RESULT 042226 {'n_frames': 1534, 'tn': 716, 'fp': 76, 'fn': 58, 'tp': 684, 'precision': 0.9, 'recall_sensitivity': 0.921832884097035, 'specificity': 0.9040404040404041, 'f1': 0.9107856191744341, 'accuracy': 0.9126466753585397, 'auroc': 0.9752698821095048}
+DONE {'n_frames': 5142, 'tn': 2318, 'fp': 248, 'fn': 435, 'tp': 2141, 'precision': 0.8961908748430305, 'recall_sensitivity': 0.8311335403726708, 'specificity': 0.9033515198752923, 'f1': 0.8624370594159114, 'accuracy': 0.867172306495527, 'auroc': 0.947078040355727}

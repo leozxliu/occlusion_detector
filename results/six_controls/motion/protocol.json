@@ -1,0 +1,13 @@
+{
+  "split": "same four leave-one-video-out folds as ResNet",
+  "features": "mean and 90th-percentile absolute grayscale differences at lags 1 and 3 frames; each raw feature plus past-only 15-frame mean and standard deviation (12 features)",
+  "preprocessing": "same normalized 224x224 channel crops; interior pixels [22:202,22:202]; grayscale /255; no intensity/static appearance features",
+  "classifier": "StandardScaler + class-balanced LogisticRegression C=1 max_iter=2000 seed=0",
+  "training": "every tenth frame; exclude +/-5 experimental seconds around OT; same labels as ResNet",
+  "test": "all eligible post-entry frames",
+  "threshold": 0.5,
+  "sustain_frames": 5,
+  "initial_history": "zero difference where history unavailable; no future frames",
+  "clock": "video time zero, 10x",
+  "tuning": "none"
+}

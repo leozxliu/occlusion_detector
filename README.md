@@ -1,73 +1,118 @@
-# Clotting: occlusion-onset detection in microfluidic thrombosis video
+# Microfluidic occlusion detection
 
-Detect the instant blood flow stops (occlusion onset) in brightfield microscopy
-video of microfluidic channels, where a growing thrombus eventually blocks the vessel.
+Detect blood-flow occlusion in microscopy videos and evaluate predictions against experimentally recorded occlusion times (OTs). This repository includes an ImageNet-pretrained ResNet18 baseline and a causal frame-difference motion baseline.
 
-## Quick demo
+The current experiment uses **six approved channels from four control videos**, with **leave-one-video-out cross-validation**. Both channels from a recording always stay in the same split. These are small-sample **development results**, not external or clinical validation.
 
-The model (trained only on the control video) applied to a **new, unseen**
-sample. The curve is the per-frame occlusion probability; the orange line is the
-detected onset; the filmstrip shows the channel flipping from translucent flow
-(green) to packed thrombus (red) exactly at that instant.
+## Recorded comparison
 
-<img src="docs/demo_prp_ch0.png" alt="Occlusion-onset detection demo" width="900">
+Both methods use identical held-out videos and 5,142 eligible post-entry frames. Frame metrics are pooled; adjacent frames are correlated and are not independent experiments.
 
-## Data
+| Metric | ResNet18 | Motion + logistic regression |
+|---|---:|---:|
+| Recall / sensitivity | 90.1% | 83.1% |
+| Precision | 96.4% | 89.6% |
+| Specificity | 96.6% | 90.3% |
+| F1 | 0.932 | 0.862 |
+| Accuracy | 93.4% | 86.7% |
+| Channels with a sustained trigger | 5/6 | 6/6 |
+| Onset MAE, triggered channels only | 18.2 s (n=5) | 59.7 s (n=6) |
+| Onset MAE on the same five triggered channels | 18.2 s | 56.2 s |
+| Pre-OT sustained alarm episodes | 4 | 7 |
+| First triggers more than 5 s early | 2/6 | 5/6 |
 
-Data comes from our in-house brightfield microscopy videos of blood flowing through
-microfluidic channels until a thrombus occludes the vessel. Raw videos live in
-`data/raw/` (30 fps, 694x510, playback is **10x sped up**, so
-`real_time_s = video_time_s * 10`).
+All timing errors are **experimental seconds**, not playback seconds. ResNet did not produce a sustained trigger for 041026 right; its MAE excludes that missed event. Producing a trigger is not equivalent to accurate event detection.
 
-Each video's two channels are treated as **independent datasets**.
+A sustained alarm is probability >0.5 for five consecutive frames. Its onset is backdated to the first frame; online confirmation arrives four frames later (1.33 experimental seconds at 30 fps and 10x playback). A false-alarm episode is a positive run of at least five frames whose confirmation occurs before workbook OT. Separate runs count separately. The 4 versus 7 episodes occurred over 14.26 experimental minutes of eligible pre-OT footage. All six channels eventually occlude; this is not a false-alarm estimate from independent never-occluded controls.
 
-Temporal labeling of the training video (real-time seconds):
+[Full machine-readable comparison](results/six_controls/comparison.json) · [Per-channel report](results/six_controls/REPORT.txt)
 
-- `t < 90 s` -> **flowing** (0)
-- `t > 200 s` -> **occluded** (1)
-- `90-200 s` -> **excluded** (human onset judgement is unreliable there).
+![Held-out probabilities and workbook OTs](results/six_controls/comparison.png)
 
-There is deliberately **no onset "ground truth"**: the true stop instant is unknown,
-so the detector reports the *detected* onset rather than an error against a guess.
+## Dataset and clock
 
-## Method — per-frame CNN classifier
+The owner reviewed the recordings and approved this selection:
 
-A timm ResNet classifies each cropped channel frame as flowing/occluded.
-Evaluation is **leave-one-channel-out**: train on one channel, test on the other.
-Onset is triggered when occlusion probability stays above threshold for N frames.
+| Video | Approved channel(s) | Workbook OT (experimental s) | Excluded |
+|---|---|---|---|
+| 041026 Control.avi | right / ch2 | 299.203874 | left / ch1 |
+| 041426 Control.avi | left / ch2 | 174.658505 | right / ch1 |
+| 041626 Control.avi | left / ch2; right / ch1 | 118.475791; 158.642935 | — |
+| 042226 Control.avi | left / ch2; right / ch1 | 153.567356; 163.598068 | — |
 
-## Setup
+- Original videos are 30 fps, 694×510, with user-confirmed **10x playback**.
+- Experimental time = `10 * video_time_s`, starting at **video zero**. Visible blood arrival gates frame eligibility but does **not** shift the OT clock.
+- Labels are 0 before channel OT and 1 at/after OT. This assumes occlusion persists after OT; these are OT-derived labels, not independently annotated frame labels.
+- All four originals are treated as **top-to-bottom** after direction review. An earlier incorrect flip of April 10 was removed. Vertical-flip augmentation is disabled; horizontal flips and brightness augmentation remain for ResNet.
+- ROIs: left `[70, 0, 240, 510]`, right `[480, 0, 670, 510]`; crops resized to 224×224 and saved as quality-95 JPEGs.
+- Entry frames (zero-based): 041026 right 150; 041426 left 160; 041626 both 85; 042226 both 80.
+- April 10 filename/case ID conflicts with the workbook date; identity follows the filename/case ID and the discrepancy remains unresolved.
+- Exclusions were owner-directed during anomaly review. Detailed anomaly diagnoses were not recorded. The results apply only to the approved subset; do not attribute gains over the earlier eight-channel experiment solely to model changes.
+
+The exact settings are in [configs/six_controls.json](configs/six_controls.json). Raw videos, private workbooks, generated crops and trained weights are **not distributed in this Git repository**. Obtain authorized access to the four original AVIs to reproduce training. Saved probabilities, metrics, protocols, logs and input fingerprints are included. A fresh clone can reproduce the comparison plots without the raw videos.
+
+## Splits and models
+
+Each of four folds holds out one entire video and trains on the other three. Excluded channels never enter either split. Every ResNet fold starts with fresh ImageNet-pretrained weights, not the earlier occlusion checkpoint. Settings are fixed, not selected on the held-out video.
+
+**ResNet18:** timm feature backbone plus dropout 0.2 and a two-class head; full fine-tuning, 12 epochs, AdamW (learning rate 0.0003, weight decay 0.0001), batch size 32, seed 0, class-weighted cross entropy. Training samples every tenth frame (3 fps), omitting ±5 experimental seconds around OT. Test metrics use all eligible frames at 30 fps, including that transition band.
+
+**Motion baseline:** mean and 90th-percentile absolute grayscale differences at lags 1 and 3 frames in the crop interior, plus trailing 15-frame means and standard deviations (12 features). StandardScaler and class-balanced logistic regression (C=1, max_iter=2000, seed 0) are fitted only on the training videos, using the same training frame indices and transition exclusions. All temporal windows are past-only. These features measure image change, not calibrated physical velocity.
+
+**Known motion limitation:** unavailable history at startup is encoded as zero change. This implementation can produce artificial occlusion probabilities near entry and contributed to very early triggers on April 16. The published baseline retains this behavior for faithful reproduction; it is not ready for deployment. Proper missing-history handling is future work, not a claimed result.
+
+## Reproduce
+
+Run from the repository root. Python 3.12 was used for the recorded experiment, on Apple MPS. Other devices/library versions may produce different neural-network results even with the same seed.
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -e .            # or: pip install -r requirements from pyproject
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+python -m unittest discover -s tests -v
 ```
 
+`requirements-experiment.lock.txt` records the original environment (`pip freeze`) for provenance; it is not a cross-platform lockfile. ImageNet weights are downloaded on first use. The run used the previously verified normalized frame cache; preparation below reconstructs that cache from the originals, subject to decoder-version differences.
 
+### 1. Prepare approved frames
 
-## Run
+Put the four original AVIs under a directory of your choice. The command searches it recursively and rejects ambiguous filenames, unexpected frame counts, and decode failures. Use original AVIs, not the transcoded preview MP4s.
 
 ```bash
-export PYTHONPATH=src
-# 1) extract per-channel frames + labels
-python -m clotting.io.extract --config configs/data.yaml
-# 2) train + evaluate the classifier (leave-one-channel-out)
-python -m clotting.train.classify --data-config configs/data.yaml --config configs/baseline.yaml
-# 3) visualize results
-python -m clotting.eval.plot_signal
-python -m clotting.eval.demo
-# 4) run the trained model on a new video (auto-detects channels + orientation)
-python -m clotting.infer.predict --video "data/raw/example_video.avi" --out runs/prp
+python -m clotting.experiments.prepare \
+  --config configs/six_controls.json \
+  --videos /path/to/control-videos \
+  --out data/six_controls
 ```
 
-Outputs land in `runs/stage1/`:
+Expected output: **5,142 crops**, `dataset.json`, `frame_labels.json`, and source hashes. Existing labeled output is not overwritten; choose a new directory to re-extract. Configured entry frames are manual review inputs, not an automatic blood-arrival detector.
 
-- `model_test_<ch>.pt` — model for each fold
-- `signal_test_<ch>.csv` — per-frame occlusion probability over the whole video
-- `summary.json` — frame F1 and detected onset per fold
+### 2. Retrain both baselines
 
+```bash
+python -m clotting.experiments.train_resnet \
+  --data data/six_controls --out runs/six_channel_comparison
 
+python -m clotting.experiments.train_motion \
+  --data data/six_controls --out runs/six_channel_comparison
+
+python -m clotting.experiments.compare --out runs/six_channel_comparison
+```
+
+Each training command saves four models (one per held-out video), per-channel probability signals, protocols and summaries. The comparison verifies identical training counts, held-out video identities, test timestamps and labels. Checkpoints are local `.pt` files for ResNet and `.joblib` files for motion; load only trusted files.
+
+To regenerate the **published** comparison without retraining or raw videos:
+
+```bash
+python -m clotting.experiments.compare --out results/six_controls
+```
+
+The archived results are a single run, not an average across seeds. Review per-video metrics: the strong pooled score hides the failure on April 10 right. Newly collected videos are needed for a final untouched test because these recordings and earlier results informed development and exclusions.
+
+## Earlier single-video workflow
+
+The original commands under `clotting.io.extract`, `clotting.train.classify` and `clotting.infer.predict` remain available, but implement a **different experiment**: one video, early/late temporal labels, leave-one-channel-out evaluation, and no workbook OT reference. They do not reproduce the six-channel results above. The old demo in `docs/` is historical and is not evidence for the new evaluation.
 
 ## License
 
-Released under the [MIT License](LICENSE).
+Code is distributed under the [MIT License](LICENSE). This does not grant access to private source videos or workbooks.

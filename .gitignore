@@ -7,3 +7,14 @@ data/_probe_rbc/
 runs/
 *.avi
 ROADMAP.md
+
+# Private experimental media, generated crops, and local configs
+data/raw/
+data/retrain_frames/
+data/retrain_labels/
+data/six_controls/
+configs/retrain_data.json
+*.mp4
+*.pt
+*.joblib
+/runs_training.log

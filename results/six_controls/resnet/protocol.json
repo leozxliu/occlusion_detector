@@ -1,0 +1,21 @@
+{
+  "split": "leave-one-video-out, both channels together; four folds",
+  "clock": "video zero; experiment_s=10*video_s",
+  "initialization": "fresh ImageNet ResNet18 each fold, no prior occlusion weights",
+  "epochs": 12,
+  "seed": 0,
+  "training_sampling_fps": 3,
+  "test_sampling": "all frames at 30 fps after visible blood entry",
+  "train_transition_exclusion_experiment_s": 5,
+  "test_transition_exclusion": false,
+  "optimizer": "AdamW lr=0.0003 weight_decay=0.0001",
+  "batch_size": 32,
+  "threshold": 0.5,
+  "sustain_frames": 5,
+  "model_selection": "fixed final epoch; no test-driven tuning",
+  "labels": "0 before workbook OT, 1 at/after OT; assumes persistent occlusion after OT",
+  "roi": "fixed x=[70,240] left and [480,670] right; full height; no label-based ROI fitting",
+  "onset_definition": "start of first run of 5 positive frames; confirmation arrives 4 frames later",
+  "orientation": "top_to_bottom; source orientation from manifest; no vertical augmentation",
+  "scope": "OT-based experimental labels, not independent frame-by-frame annotations"
+}

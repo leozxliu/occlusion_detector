@@ -1,0 +1,268 @@
+{
+  "protocol": {
+    "split": "same four leave-one-video-out folds as ResNet",
+    "features": "mean and 90th-percentile absolute grayscale differences at lags 1 and 3 frames; each raw feature plus past-only 15-frame mean and standard deviation (12 features)",
+    "preprocessing": "same normalized 224x224 channel crops; interior pixels [22:202,22:202]; grayscale /255; no intensity/static appearance features",
+    "classifier": "StandardScaler + class-balanced LogisticRegression C=1 max_iter=2000 seed=0",
+    "training": "every tenth frame; exclude +/-5 experimental seconds around OT; same labels as ResNet",
+    "test": "all eligible post-entry frames",
+    "threshold": 0.5,
+    "sustain_frames": 5,
+    "initial_history": "zero difference where history unavailable; no future frames",
+    "clock": "video time zero, 10x",
+    "tuning": "none"
+  },
+  "folds": [
+    {
+      "test_case": "041026",
+      "training_cases": [
+        "041426",
+        "041626",
+        "042226"
+      ],
+      "training_frames": 420,
+      "channels": [
+        {
+          "case": "041026",
+          "side": "right",
+          "channel": 2,
+          "ot_s": 299.203874,
+          "observable": true,
+          "metrics": {
+            "n_frames": 803,
+            "tn": 651,
+            "fp": 97,
+            "fn": 0,
+            "tp": 55,
+            "precision": 0.3618421052631579,
+            "recall_sensitivity": 1.0,
+            "specificity": 0.8703208556149733,
+            "f1": 0.5314009661835749,
+            "accuracy": 0.8792029887920298,
+            "auroc": 0.9482498784637822
+          },
+          "predicted_onset_video_s": 22.2,
+          "predicted_onset_experiment_s": 222.0,
+          "error_experiment_s": -77.20387399999998
+        }
+      ],
+      "metrics": {
+        "n_frames": 803,
+        "tn": 651,
+        "fp": 97,
+        "fn": 0,
+        "tp": 55,
+        "precision": 0.3618421052631579,
+        "recall_sensitivity": 1.0,
+        "specificity": 0.8703208556149733,
+        "f1": 0.5314009661835749,
+        "accuracy": 0.8792029887920298,
+        "auroc": 0.9482498784637822
+      }
+    },
+    {
+      "test_case": "041426",
+      "training_cases": [
+        "041026",
+        "041626",
+        "042226"
+      ],
+      "training_frames": 426,
+      "channels": [
+        {
+          "case": "041426",
+          "side": "left",
+          "channel": 2,
+          "ot_s": 174.658505,
+          "observable": true,
+          "metrics": {
+            "n_frames": 745,
+            "tn": 304,
+            "fp": 60,
+            "fn": 0,
+            "tp": 381,
+            "precision": 0.8639455782312925,
+            "recall_sensitivity": 1.0,
+            "specificity": 0.8351648351648352,
+            "f1": 0.927007299270073,
+            "accuracy": 0.9194630872483222,
+            "auroc": 0.9996394681434052
+          },
+          "predicted_onset_video_s": 15.466666666666667,
+          "predicted_onset_experiment_s": 154.66666666666666,
+          "error_experiment_s": -19.991838333333334
+        }
+      ],
+      "metrics": {
+        "n_frames": 745,
+        "tn": 304,
+        "fp": 60,
+        "fn": 0,
+        "tp": 381,
+        "precision": 0.8639455782312925,
+        "recall_sensitivity": 1.0,
+        "specificity": 0.8351648351648352,
+        "f1": 0.927007299270073,
+        "accuracy": 0.9194630872483222,
+        "auroc": 0.9996394681434052
+      }
+    },
+    {
+      "test_case": "041626",
+      "training_cases": [
+        "041026",
+        "041426",
+        "042226"
+      ],
+      "training_frames": 298,
+      "channels": [
+        {
+          "case": "041626",
+          "side": "left",
+          "channel": 2,
+          "ot_s": 118.475791,
+          "observable": true,
+          "metrics": {
+            "n_frames": 1030,
+            "tn": 261,
+            "fp": 10,
+            "fn": 59,
+            "tp": 700,
+            "precision": 0.9859154929577465,
+            "recall_sensitivity": 0.922266139657444,
+            "specificity": 0.9630996309963099,
+            "f1": 0.9530292716133424,
+            "accuracy": 0.933009708737864,
+            "auroc": 0.9798433557458104
+          },
+          "predicted_onset_video_s": 2.8666666666666667,
+          "predicted_onset_experiment_s": 28.666666666666668,
+          "error_experiment_s": -89.80912433333333
+        },
+        {
+          "case": "041626",
+          "side": "right",
+          "channel": 1,
+          "ot_s": 158.642935,
+          "observable": true,
+          "metrics": {
+            "n_frames": 1030,
+            "tn": 386,
+            "fp": 5,
+            "fn": 318,
+            "tp": 321,
+            "precision": 0.9846625766871165,
+            "recall_sensitivity": 0.5023474178403756,
+            "specificity": 0.9872122762148338,
+            "f1": 0.6652849740932643,
+            "accuracy": 0.6864077669902913,
+            "auroc": 0.9705622195806267
+          },
+          "predicted_onset_video_s": 2.8666666666666667,
+          "predicted_onset_experiment_s": 28.666666666666668,
+          "error_experiment_s": -129.97626833333334
+        }
+      ],
+      "metrics": {
+        "n_frames": 2060,
+        "tn": 647,
+        "fp": 15,
+        "fn": 377,
+        "tp": 1021,
+        "precision": 0.9855212355212355,
+        "recall_sensitivity": 0.7303290414878397,
+        "specificity": 0.9773413897280967,
+        "f1": 0.8389482333607231,
+        "accuracy": 0.8097087378640777,
+        "auroc": 0.9767092825745888
+      }
+    },
+    {
+      "test_case": "042226",
+      "training_cases": [
+        "041026",
+        "041426",
+        "041626"
+      ],
+      "training_frames": 350,
+      "channels": [
+        {
+          "case": "042226",
+          "side": "left",
+          "channel": 2,
+          "ot_s": 153.567356,
+          "observable": true,
+          "metrics": {
+            "n_frames": 767,
+            "tn": 305,
+            "fp": 76,
+            "fn": 5,
+            "tp": 381,
+            "precision": 0.8336980306345733,
+            "recall_sensitivity": 0.9870466321243523,
+            "specificity": 0.800524934383202,
+            "f1": 0.9039145907473309,
+            "accuracy": 0.894393741851369,
+            "auroc": 0.9803081609617451
+          },
+          "predicted_onset_video_s": 12.933333333333334,
+          "predicted_onset_experiment_s": 129.33333333333334,
+          "error_experiment_s": -24.234022666666647
+        },
+        {
+          "case": "042226",
+          "side": "right",
+          "channel": 1,
+          "ot_s": 163.598068,
+          "observable": true,
+          "metrics": {
+            "n_frames": 767,
+            "tn": 411,
+            "fp": 0,
+            "fn": 53,
+            "tp": 303,
+            "precision": 1.0,
+            "recall_sensitivity": 0.851123595505618,
+            "specificity": 1.0,
+            "f1": 0.9195751138088012,
+            "accuracy": 0.9308996088657105,
+            "auroc": 0.9999931654774598
+          },
+          "predicted_onset_video_s": 18.066666666666666,
+          "predicted_onset_experiment_s": 180.66666666666666,
+          "error_experiment_s": 17.068598666666645
+        }
+      ],
+      "metrics": {
+        "n_frames": 1534,
+        "tn": 716,
+        "fp": 76,
+        "fn": 58,
+        "tp": 684,
+        "precision": 0.9,
+        "recall_sensitivity": 0.921832884097035,
+        "specificity": 0.9040404040404041,
+        "f1": 0.9107856191744341,
+        "accuracy": 0.9126466753585397,
+        "auroc": 0.9752698821095048
+      }
+    }
+  ],
+  "pooled_frame_metrics": {
+    "n_frames": 5142,
+    "tn": 2318,
+    "fp": 248,
+    "fn": 435,
+    "tp": 2141,
+    "precision": 0.8961908748430305,
+    "recall_sensitivity": 0.8311335403726708,
+    "specificity": 0.9033515198752923,
+    "f1": 0.8624370594159114,
+    "accuracy": 0.867172306495527,
+    "auroc": 0.947078040355727
+  },
+  "onset_mae_experimental_s_detected_only": 59.71395438888887,
+  "observable_events": 6,
+  "observable_events_with_trigger": 6,
+  "missed_observable_events": 0
+}
